@@ -16,12 +16,14 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     public GameObject player;
-    GameObject[] finishObjects;
+    private int count;
+    public Text countText;
+
 
     private void Start()
     {
-        finishObjects = GameObject.FindGameObjectsWithTag("ShowOnFinish");
-        hideFinished();
+        count = 0;
+        SetCountText();
     }
 
     void OnTriggerEnter(Collider coll)
@@ -33,30 +35,19 @@ public class PlayerManager : MonoBehaviour
             //FindObjectOfType<GameManager>().EndGame();
             SceneManager.LoadScene("GameOver");
         }
-    }
-
-
-
-
-    public void showFinished()
-    {
-        foreach (GameObject g in finishObjects)
+        if(collidedWith.CompareTag("key"))
         {
-            g.SetActive(true);
+            collidedWith.gameObject.SetActive(false);
+            count = count + 1;
+            SetCountText();
         }
 
-    }
-    //hides objects with ShowOnFinish tag
-    public void hideFinished()
-    {
-        foreach (GameObject g in finishObjects)
+        void SetCountText()
         {
-            g.SetActive(false);
+            countText.text = "Number of keys obtained: " + count.ToString() + "/4";
         }
-    }
-    public void Reload()
-    {
-        SceneManager.LoadScene("Game");
-    }
-   
+
+
+     
+
 }
