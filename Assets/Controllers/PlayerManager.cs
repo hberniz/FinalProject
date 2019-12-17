@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -16,14 +17,18 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     public GameObject player;
-    private int count;
-    public Text countText;
+    public int count=0;
+    public Text scoreGT, scoreGO;
 
 
     private void Start()
     {
         count = 0;
         SetCountText();
+        scoreGO = GameObject.Find("scoreboard").GetComponent<Text>();
+        // Get the GUIText Component of that GameObject
+        scoreGT = scoreGO.GetComponent<Text>();                          // 3
+        scoreGT.text = "Number of keys obtained: " + count.ToString() + "/4";
     }
 
     void OnTriggerEnter(Collider coll)
@@ -35,19 +40,18 @@ public class PlayerManager : MonoBehaviour
             //FindObjectOfType<GameManager>().EndGame();
             SceneManager.LoadScene("GameOver");
         }
-        if(collidedWith.CompareTag("key"))
+        if (collidedWith.CompareTag("key"))
         {
             collidedWith.gameObject.SetActive(false);
             count = count + 1;
             SetCountText();
         }
+    }
 
-        void SetCountText()
-        {
-            countText.text = "Number of keys obtained: " + count.ToString() + "/4";
-        }
-
-
-     
+    void SetCountText()
+    {
+        scoreGT.text = "Number of keys obtained: " + count.ToString() + "/4";
+    }
+   
 
 }

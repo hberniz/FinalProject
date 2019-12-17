@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Fire
   - key
+  - door
+  - scoreboard
   layers:
   - Default
   - TransparentFX
